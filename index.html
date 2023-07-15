@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Lottery</title>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Lottery</h1>
+    </div>
+    <br>
+    <div class="container">
+        <h2>Pick Your Numbers</h2>
+        <input type="number" id="PickOne" placeholder="">
+        <input type="number" id="PickTwo" placeholder="">
+        <input type="number" id="PickThree" placeholder="">
+        <input type="number" id="PickFour" placeholder="">
+        <input type="number" id="PickFive" placeholder="">
+        <input type="number" id="PickSix" placeholder="">
+        <h4 id="warning">Pick some numbers between 1 and 59.</h4>
+    </div>
+
+    <div class="buttons">
+        <button id="btnStart">Start</button>
+        <button id="btnReset">Reset</button>
+        <button id="btnLD">Lucky Dip</button>
+    </div>
+
+    <div class="container">
+        <h2>Draw Results</h2>
+        <input type="number" id="ResultOne" placeholder="">
+        <input type="number" id="ResultTwo" placeholder="">
+        <input type="number" id="ResultThree" placeholder="">
+        <input type="number" id="ResultFour" placeholder="">
+        <input type="number" id="ResultFive" placeholder="">
+        <input type="number" id="ResultSix" placeholder="">
+    </div>
+
+    <div class="container">
+        <h2>Prizes</h2>
+        <h3>Match numbers to win!</h3>
+        <li>3 numbers earns 50</li>
+        <li>4 numbers earns 100</li>
+        <li>5 numbers earns 200</li>
+        <li>6 numbers earns 300</li>
+    </div>
+
+    <script type="module" src="./scripts/script.js" async></script>
+</body>
+</html>
