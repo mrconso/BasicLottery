@@ -4,12 +4,12 @@ import { setElementValue, setWarning, sleep } from "./util.js"
 let myNumbers = [];
 let myResults = [];
 
-
-
 // The amount of numbers that can be picked
 const pickAmount = 6;
 const inputIDs = ['PickOne', 'PickTwo','PickThree','PickFour','PickFive', 'PickSix'];
 const resultIDs = ['ResultOne', 'ResultTwo','ResultThree','ResultFour','ResultFive', 'ResultSix'];
+const loseMessages = ["Better Luck Next Time!", "Nice Try!", "Ooh So Close!"];
+const prizes = [0, 0, 0, 50, 100, 200, 300];
 
 ////////////////////////////
 ///        Buttons       ///
@@ -36,9 +36,21 @@ btnLD.addEventListener('click', async function(){
     setRandomPicks(false);
     await suspense();
     setRandomPicks(true);
+    evaluateWin();
     console.log("Lucky Dip")
     console.log("My Numbers: " + myNumbers);
     console.log("Results: " + myResults)
+});
+
+const btnWin = document.getElementById('btnWin');
+btnWin.addEventListener('click', async function(){
+    clearNumberArr()
+    let valid = errorCheck();
+    if (valid)
+    {
+        setFixedResults();
+        evaluateWin();
+    }
 });
 ////////////////////////////
 ///        Start         ///
@@ -50,6 +62,7 @@ async function play()
     {
         await suspense();
         setRandomPicks(true);
+        evaluateWin();
     }
     else { clearNumberArr(); }
 };
@@ -102,6 +115,27 @@ async function suspense() {
     };
 };
 
+function evaluateWin()
+{
+    //Could use indexOf(number) !== -1 if includes not supported
+    let matches = myNumbers.filter(number => myResults.includes(number));
+    console.log("Matches: " + matches);
+
+    let prize = prizes[matches.length];
+    if (prize > 0){
+        document.getElementById("prize").textContent = "You have won " +  prize;
+    }
+    else
+    {
+        document.getElementById("prize").textContent = loseMessages[matches.length];
+    }
+
+    let matchText =
+
+    document.getElementById("matches").textContent = matches.length == 1 ? matches.length + " Match" : matches.length + " Matches";
+
+}
+
 ////////////////////////////
 ///        Reset         ///
 ////////////////////////////
@@ -116,6 +150,8 @@ function resetPicks(){
     resultIDs.forEach(id => {
         setElementValue(id, "");
     });
+    document.getElementById("prize").textContent = "Are ya feeling lucky?";
+    document.getElementById("matches").textContent = "";
 };
 
 ////////////////////////////
@@ -129,6 +165,18 @@ function setRandomPicks(results){
         setElementValue(arr[i], rand);
         results ? myResults.push(rand) : myNumbers.push(rand);
 
+    };
+};
+
+////////////////////////////
+///       Win Test      ///
+////////////////////////////
+function setFixedResults(results){
+    let arr = resultIDs;
+    for (let i = 0; i < arr.length; i++)
+    {
+        setElementValue(arr[i], i+1);
+        myResults.push(i+1);
     };
 };
 

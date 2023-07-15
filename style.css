@@ -34,6 +34,15 @@ body{
     margin-bottom: 1rem;
 }
 
+.container ul{
+    list-style-type: none;
+}
+
+.container li{
+    font-size: 15px;
+    margin-bottom: .2rem;
+}
+
 input{
     background-color: azure;
     color: #000;
