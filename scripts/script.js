@@ -1,4 +1,4 @@
-import { setElementValue, setWarning } from "./util.js"
+import { setElementValue, setWarning, sleep } from "./util.js"
 
 //Keep track of my picks
 let myNumbers = [];
@@ -15,9 +15,9 @@ const resultIDs = ['ResultOne', 'ResultTwo','ResultThree','ResultFour','ResultFi
 ///        Buttons       ///
 ////////////////////////////
 const btnStart = document.getElementById('btnStart');
-btnStart.addEventListener('click', function(){
+btnStart.addEventListener('click', async function(){
     clearNumberArr()
-    play();
+    await play();
     console.log("Draw")
     console.log("My Numbers: " + myNumbers);
     console.log("Results: " + myResults)
@@ -31,9 +31,10 @@ btnReset.addEventListener('click', function(){
 });
 
 const btnLD = document.getElementById('btnLD');
-btnLD.addEventListener('click', function(){
+btnLD.addEventListener('click', async function(){
     clearNumberArr()
     setRandomPicks(false);
+    await suspense();
     setRandomPicks(true);
     console.log("Lucky Dip")
     console.log("My Numbers: " + myNumbers);
@@ -42,11 +43,12 @@ btnLD.addEventListener('click', function(){
 ////////////////////////////
 ///        Start         ///
 ////////////////////////////
-function play()
+async function play()
 {
     let valid = errorCheck();
     if (valid)
     {
+        await suspense();
         setRandomPicks(true);
     }
     else { clearNumberArr(); }
@@ -86,6 +88,19 @@ function errorCheck()
     }
     return valid;
 }
+
+async function suspense() {
+    let timer = 10;
+    while (timer > 0)
+    {
+        resultIDs.forEach(id => {
+                let rand = Math.floor((Math.random() * 59) + 1);
+                setElementValue(id, rand);
+            });
+        await sleep(200);
+        timer--;
+    };
+};
 
 ////////////////////////////
 ///        Reset         ///

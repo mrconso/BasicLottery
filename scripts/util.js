@@ -13,4 +13,8 @@ function setWarning(text){
     document.getElementById('warning').textContent = warningMap[text];
 };
 
-export { setElementValue, setWarning }
+function sleep(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export { setElementValue, setWarning, sleep }
