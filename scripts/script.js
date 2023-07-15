@@ -34,7 +34,7 @@ const btnLD = document.getElementById('btnLD');
 btnLD.addEventListener('click', async function(){
     clearNumberArr()
     setRandomPicks(false);
-    await suspense();
+    await suspense(100);
     setRandomPicks(true);
     evaluateWin();
     console.log("Lucky Dip")
@@ -48,9 +48,11 @@ btnWin.addEventListener('click', async function(){
     let valid = errorCheck();
     if (valid)
     {
+        await suspense(50);
         setFixedResults();
         evaluateWin();
     }
+    else { clearNumberArr(); }
 });
 ////////////////////////////
 ///        Start         ///
@@ -60,7 +62,7 @@ async function play()
     let valid = errorCheck();
     if (valid)
     {
-        await suspense();
+        await suspense(100);
         setRandomPicks(true);
         evaluateWin();
     }
@@ -73,6 +75,11 @@ function errorCheck()
     inputIDs.forEach(id => {
         try
         {
+            if (myNumbers.includes(parseInt(document.getElementById(id).value)))
+            {
+                valid = false;
+                setWarning("duplicate");
+            }
             if (parseInt(document.getElementById(id).value))
             {
                 myNumbers.push(parseInt(document.getElementById(id).value));
@@ -84,6 +91,7 @@ function errorCheck()
         }
     });
 
+    if (!valid) { return };
     if (myNumbers.length !== pickAmount)
     {
         valid = false;
@@ -102,7 +110,7 @@ function errorCheck()
     return valid;
 }
 
-async function suspense() {
+async function suspense(speed) {
     let timer = 10;
     while (timer > 0)
     {
@@ -110,7 +118,7 @@ async function suspense() {
                 let rand = Math.floor((Math.random() * 59) + 1);
                 setElementValue(id, rand);
             });
-        await sleep(200);
+        await sleep(speed);
         timer--;
     };
 };
@@ -159,12 +167,17 @@ function resetPicks(){
 ////////////////////////////
 function setRandomPicks(results){
     let arr = results ? resultIDs : inputIDs;
+    let pushArr = results ? myResults: myNumbers;
     for (let i = 0; i < arr.length; i++)
     {
         let rand = Math.floor((Math.random() * 59) + 1);
+        //Avoids Duplicates
+        while(pushArr.includes(rand))
+        {
+            rand = Math.floor((Math.random() * 59) + 1);
+        }
         setElementValue(arr[i], rand);
-        results ? myResults.push(rand) : myNumbers.push(rand);
-
+        pushArr.push(rand);
     };
 };
 

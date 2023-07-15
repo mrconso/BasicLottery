@@ -1,7 +1,8 @@
 const warningMap = new Map();
 warningMap['default'] = "Pick some numbers between 1 and 59."
 warningMap['amount'] = "You must fill every box with a number."
-warningMap['value'] = "The values are incorrect."
+warningMap['value'] = "All values must be between 1-59."
+warningMap['duplicate'] = "All values must be unique."
 
 function setElementValue(id, val)
 {
